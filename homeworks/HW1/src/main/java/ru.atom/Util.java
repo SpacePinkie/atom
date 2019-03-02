@@ -1,4 +1,5 @@
 package ru.atom;
+
 import java.util.Arrays;
 /**
  * In this assignment you need to implement the following util methods.
@@ -25,7 +26,10 @@ public class Util {
      * @return the largest of values.
      */
     public static int max(int[] values) {
-        return Arrays.stream(values).max().getAsInt();
+        if (Arrays.stream(values).max().isPresent())
+            return Arrays.stream(values).max().getAsInt();
+        else
+            return -1;
     }
 
     /**
