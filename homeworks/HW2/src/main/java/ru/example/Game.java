@@ -49,8 +49,8 @@ public class Game {
         mainPlayer.setName(playerName);
         System.out.println("Hi," + playerName + " Do you want to play?");
         System.out.println("y - Yes, n -No");
-        String c = in.nextLine();
-        if (c.equals("y"))
+        String ch = in.nextLine();
+        if (ch.equals("y"))
             while (true) {
                 log.info("Class: Game main loop is active");
                 String word = readNewWord();
