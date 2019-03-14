@@ -1,0 +1,3 @@
+2019-03-14 08:41:03.161 INFO [main] [ru.example.Game] [<init>] [ru.example.Game.<init>(Game.java:25)] - Class: Game is starting
+2019-03-14 08:41:03.176 INFO [main] [ru.example.Game] [<init>] [ru.example.Game.<init>(Game.java:39)] - Class: Game started
+2019-03-14 08:41:03.176 INFO [main] [ru.example.Game] [startGame] [ru.example.Game.startGame(Game.java:46)] - Class: Game, method: startGame is starting
