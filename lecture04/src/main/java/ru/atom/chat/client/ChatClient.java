@@ -20,31 +20,69 @@ public class ChatClient {
     public static Response login(String name) throws IOException {
         MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
         Request request = new Request.Builder()
-                .post(RequestBody.create(mediaType, ""))
-                .url(PROTOCOL + HOST + PORT + "/chat/login?name=" + name)
-                .build();
+            .post(RequestBody.create(mediaType, ""))
+            .url(PROTOCOL + HOST + PORT + "/chat/login?name=" + name)
+            .build();
 
+        return client.newCall(request).execute();
+    }
+
+    //POST host:port/chat/logout?name=my_name
+    public static Response logout(String name) throws IOException {
+        MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
+        Request request = new Request.Builder()
+            .post(RequestBody.create(mediaType, ""))
+            .url(PROTOCOL + HOST + PORT + "/chat/logout?name=" + name)
+            .build();
         return client.newCall(request).execute();
     }
 
     //GET host:port/chat/chat
     public static Response viewChat() throws IOException {
         Request request = new Request.Builder()
-                .get()
-                .url(PROTOCOL + HOST + PORT + "/chat/chat")
-                .addHeader("host", HOST + PORT)
-                .build();
+            .get()
+            .url(PROTOCOL + HOST + PORT + "/chat/chat")
+            .addHeader("host", HOST + PORT)
+            .build();
         return client.newCall(request).execute();
     }
 
     //POST host:port/chat/say?name=my_name
     //Body: "msg='my_message'"
     public static Response say(String name, String msg) throws IOException {
-        throw new UnsupportedOperationException();
+        MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
+        Request r = new Request.Builder()
+            .post(RequestBody.create(mediaType, "msg=" + msg))
+            .url(PROTOCOL + HOST + PORT + "/chat/say?name=" + name)
+            .build();
+        return client.newCall(r).execute();
     }
 
     //GET host:port/chat/online
     public static Response viewOnline() throws IOException {
-        throw new UnsupportedOperationException();
+        Request request = new Request.Builder()
+            .get()
+            .url(PROTOCOL + HOST + PORT + "/chat/online")
+            .build();
+        return client.newCall(request).execute();
+    }
+
+    //GET host:port/chat/help
+    public static Response viewHelp() throws IOException {
+        Request request = new Request.Builder()
+            .get()
+            .url(PROTOCOL + HOST + PORT + "/chat/help")
+            .build();
+        return client.newCall(request).execute();
+    }
+
+    //POST host:port/chat/rename?new_name=new_name&name=your_name
+    public static Response rename(String new_name, String name) throws IOException {
+        MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
+        Request r = new Request.Builder()
+            .post(RequestBody.create(mediaType, ""))
+            .url(PROTOCOL + HOST + PORT + "/chat/rename?new_name=" + new_name + "&name=" + name)
+            .build();
+        return client.newCall(r).execute();
     }
 }
