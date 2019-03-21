@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import java.util.*;
+import java.util.Queue;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.stream.Collectors;
@@ -19,17 +21,21 @@ import java.util.stream.Collectors;
 public class ChatController {
     private Queue<String> messages = new ConcurrentLinkedQueue<>();
     private Map<String, String> usersOnline = new ConcurrentHashMap<>();
-    private final Map<String, String> smileDict = new HashMap<String, String>() {{
-        put("lol", "XD");
-        put("ahaha", ":D");
-    }};
-    private final Map<String, String> commandDict = new HashMap<String, String>() {{
-        put("login", ": sing in to chat");
-        put("logout", ": quit from chat");
-        put("say", ": say something in chat");
-        put("rename", ": change another name for user");
-        put("help", ": look for help");
-    }};
+    private final Map<String, String> smileDict = new HashMap<String, String>() {
+        {
+            put("lol", "XD");
+            put("ahaha", ":D");
+        }
+    };
+    private final Map<String, String> commandDict = new HashMap<String, String>() {
+        {
+            put("login", ": sing in to chat");
+            put("logout", ": quit from chat");
+            put("say", ": say something in chat");
+            put("rename", ": change another name for user");
+            put("help", ": look for help");
+        }
+    };
 
     /**
      * curl -X POST -i localhost:8080/chat/login -d "name=I_AM_STUPID"
@@ -130,23 +136,23 @@ public class ChatController {
         method = RequestMethod.POST,
         consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> rename(@RequestParam("new_name") String new_name, @RequestParam("name") String name) {
-        if (usersOnline.containsKey(new_name)) {
+    public ResponseEntity<String> rename(@RequestParam("new_name") String newName, @RequestParam("name") String name) {
+        if (usersOnline.containsKey(newName)) {
             ResponseEntity.badRequest().body("That name is already using");
         }
         if (!usersOnline.containsKey(name)) {
             ResponseEntity.badRequest().body("That user is not online");
         }
-        if (new_name.length() < 1) {
+        if (newName.length() < 1) {
             return ResponseEntity.badRequest().body("Too short name, sorry :(");
         }
-        if (new_name.length() > 20) {
+        if (newName.length() > 20) {
             return ResponseEntity.badRequest().body("Too long name, sorry :(");
         }
         usersOnline.remove(name);
-        usersOnline.put(new_name, new_name);
-        messages.add(name + " change name to " + new_name);
-        return ResponseEntity.ok().body("Well, know you are \"" + new_name + "\"!");
+        usersOnline.put(newName, newName);
+        messages.add(name + " change name to " + newName);
+        return ResponseEntity.ok().body("Well, know you are \"" + newName + "\"!");
     }
 
 

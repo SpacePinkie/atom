@@ -51,11 +51,11 @@ public class ChatClient {
     //Body: "msg='my_message'"
     public static Response say(String name, String msg) throws IOException {
         MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
-        Request r = new Request.Builder()
+        Request request = new Request.Builder()
             .post(RequestBody.create(mediaType, "msg=" + msg))
             .url(PROTOCOL + HOST + PORT + "/chat/say?name=" + name)
             .build();
-        return client.newCall(r).execute();
+        return client.newCall(request).execute();
     }
 
     //GET host:port/chat/online
@@ -77,12 +77,12 @@ public class ChatClient {
     }
 
     //POST host:port/chat/rename?new_name=new_name&name=your_name
-    public static Response rename(String new_name, String name) throws IOException {
+    public static Response rename(String newName, String name) throws IOException {
         MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
-        Request r = new Request.Builder()
+        Request request = new Request.Builder()
             .post(RequestBody.create(mediaType, ""))
-            .url(PROTOCOL + HOST + PORT + "/chat/rename?new_name=" + new_name + "&name=" + name)
+            .url(PROTOCOL + HOST + PORT + "/chat/rename?new_name=" + newName + "&name=" + name)
             .build();
-        return client.newCall(r).execute();
+        return client.newCall(request).execute();
     }
 }
